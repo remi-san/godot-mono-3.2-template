@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://DefaultScene.cs" type="Script" id=1]
+
+[node name="DefaultScene" type="Node"]
+script = ExtResource( 1 )

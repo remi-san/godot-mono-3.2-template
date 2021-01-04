@@ -1,0 +1,10 @@
+﻿# Mono-specific ignores
+.mono/
+data_*/
+obj/
+
+# Build
+bin/
+
+#NuGet
+packages/
