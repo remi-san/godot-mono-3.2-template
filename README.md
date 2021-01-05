@@ -39,3 +39,10 @@ It will also update references:
 - `tests/Tests.csproj`: it will update the reference to the game project and change the default namespace
 - `tests/DummyTest.cs`: it will change the namespace (note that this is the only test file it will change, if you have others feel free to modify the script)
 - `.github/workflows/release.yml`: it will update the name of the project for the export file
+
+## Known Issues (and solutions)
+While running tests, at build step, you can get some errors.
+- If you've imported `.wav` files, it can throw errors if you didn't commit the `game/.import` directory. To do so, remove the line in `game/.gitignore` that asks to ignore `.import` and commit the directory.
+- Sometimes, the `godot` command won't quit after building the solution and I haven't been able to know why. If this happens to you, it will prevent the step to complete and cost a lot of action time. To prevent it, uncomment the two commented lines in `.github/workflows/run-tests.yml` that will allow your step to finish after 1 minute (change the value if you want to wait more) and will go to the `Tests` step (which will fail if your build step failed, but will run if that was just a problem with the `godot` executable).
+
+Let me know if you find other issues.

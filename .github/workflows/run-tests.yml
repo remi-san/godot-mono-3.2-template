@@ -29,6 +29,9 @@ jobs:
         run: |
           nuget restore $GAME_SUBDIRECTORY
           godot --path ./$GAME_SUBDIRECTORY --build-solutions --quit
+# Sometimes the godot command does not return and this step can't finish. If this happens uncomment the two next lines, it will fail after 1min and continue. If the build really failed, the tests won't run anyway.
+#          timeout-minutes: 1
+#          continue-on-error: true
       - name: Tests
         run: |
           mono $PACKAGES_PATH/$TEST_FRAMEWORK_RUNNER.$TEST_FRAMEWORK_RUNNER_VERSION/tools/$TEST_FRAMEWORK_RUNNER_EXECUTABLE $TEST_SUBDIRECTORY/bin/Debug/$TEST_TARGET_FRAMEWORK/$TEST_DLL -verbose

@@ -1,4 +1,5 @@
 ﻿# Godot-specific ignores
+# If you've imported wave files, you might have to add the .import directory to your repository as your build might fail without it.
 .import/
 
 # Imported translations (automatically generated from CSV files)

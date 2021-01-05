@@ -43,7 +43,19 @@ jobs:
     needs: release
     strategy:
       matrix:
-        platform: [ windows, mac, linux, html ]
+        include:
+          - platform: windows
+            extension: .exe
+            type: executable
+          - platform: mac
+            extension: .zip
+            type: archive
+          - platform: linux
+            extension: .x86_64
+            type: executable
+          - platform: html
+            extension: .html
+            type: executable
     container:
       image: barichello/godot-ci:mono-3.2.3
     steps:
@@ -55,33 +67,23 @@ jobs:
         run: |
           mkdir -v -p ~/.local/share/godot/templates
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.${GODOT_VERSION_MODIFIER} ~/.local/share/godot/templates/${GODOT_VERSION}.${GODOT_VERSION_MODIFIER}
-      - name: Define file name
-        id: export_file
+      - name: File information setup
+        id: file-information
         env:
           EXPORT_PLATFORM: ${{ matrix.platform }}
+          FILE_EXTENSION: ${{ matrix.extension }}
         run: |
-          if   [ "${EXPORT_PLATFORM}" = "windows" ]
+          if [ "${EXPORT_PLATFORM}" = "html" ]
           then
-              echo "::set-output name=filename::${EXPORT_NAME}.exe"
-              echo "::set-output name=type::executable"
-          elif [ "${EXPORT_PLATFORM}" = "mac" ]
-          then
-              echo "::set-output name=filename::${EXPORT_NAME}.zip"
-              echo "::set-output name=type::archive"
-          elif [ "${EXPORT_PLATFORM}" = "linux" ]
-          then
-              echo "::set-output name=filename::${EXPORT_NAME}.x86_64"
-              echo "::set-output name=type::executable"
-          elif [ "${EXPORT_PLATFORM}" = "html" ]
-          then
-              echo "::set-output name=filename::index.html"
-              echo "::set-output name=type::executable"
+              echo "::set-output name=name::index${FILE_EXTENSION}"
+          else
+              echo "::set-output name=name::${EXPORT_NAME}${FILE_EXTENSION}"
           fi
       - name: Build
         id: build
         env:
           EXPORT_PLATFORM: ${{ matrix.platform }}
-          EXPORT_FILENAME: ${{ steps.export_file.outputs.filename }}
+          EXPORT_FILENAME: ${{ steps.file-information.outputs.name }}
         run: |
           buildPath="${GITHUB_WORKSPACE}/build/${EXPORT_PLATFORM}"
           filePath="${buildPath}/${EXPORT_FILENAME}"
@@ -95,7 +97,7 @@ jobs:
           EXPORT_PLATFORM: ${{ matrix.platform }}
           BUILD_DIRECTORY: ${{ steps.build.outputs.build_directory }}
           BUILD_FILE: ${{ steps.build.outputs.build_file }}
-          FILE_TYPE: ${{ steps.export_file.outputs.type }}
+          FILE_TYPE: ${{ matrix.type }}
           VERSION: ${{ needs.release.outputs.version }}
         run: |
           rootBuildPath="${GITHUB_WORKSPACE}/build"
