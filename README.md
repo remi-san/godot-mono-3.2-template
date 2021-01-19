@@ -1,4 +1,4 @@
-# Godot mono 3.2.x project template
+# Godot mono 3.2.3 project template
 
 You can use it as a template to start a new Godot mono project.
 
@@ -42,7 +42,6 @@ It will also update references:
 
 ## Known Issues (and solutions)
 While running tests, at build step, you can get some errors.
-- If you've imported `.wav` files, it can throw errors if you didn't commit the `game/.import` directory. To do so, remove the line in `game/.gitignore` that asks to ignore `.import` and commit the directory.
-- Sometimes, the `godot` command won't quit after building the solution and I haven't been able to know why. If this happens to you, it will prevent the step to complete and cost a lot of action time. To prevent it, uncomment the two commented lines in `.github/workflows/run-tests.yml` that will allow your step to finish after 1 minute (change the value if you want to wait more) and will go to the `Tests` step (which will fail if your build step failed, but will run if that was just a problem with the `godot` executable).
+- Sometimes, the `godot` command won't quit after building the solution and I haven't been able to know why. If this happens to you, it will prevent the step to complete and cost a lot of action time. To prevent it, an option has been set in `.github/workflows/run-tests.yml#32` (sorry, I can't put it in a variable) that will allow your step to finish after 1 minute (change the value if you want to wait more) and will go to the `Tests` step (which will fail if your build step failed, but will run if that was just a problem with the `godot` executable).
 
-Let me know if you find other issues.
+Let me know if you find any other issue.
