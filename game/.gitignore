@@ -15,3 +15,7 @@ packages/
 # VS
 .vs
 .vscode
+
+# WAT
+tests/results
+tests/test_metadata.json

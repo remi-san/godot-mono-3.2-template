@@ -45,6 +45,7 @@ sed -i "s/config\/name=\"${oldName}\"/config\/name=\"${newName}\"/" "$refPath/ga
 [ -f "$refPath/tests/DummyTest.cs" ] && sed -i "s/namespace ${oldNamespace}/namespace ${newNamespace}/" "$refPath/tests/DummyTest.cs"
 
 # update the name on release workflow
+[ -f "$refPath/.github/workflows/release.yml" ] && sed -i "s/EXPORT_NAME: \"Game\"/EXPORT_NAME: \"${newName}\"/" "$refPath/.github/workflows/release.yml"
 [ -f "$refPath/.github/workflows/release.yml" ] && sed -i "s/EXPORT_NAME: \"${oldName}\"/EXPORT_NAME: \"${newName}\"/" "$refPath/.github/workflows/release.yml"
 
 echo "Done."

@@ -22,6 +22,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           lfs: true
+          submodules: true
       - name: Setup test runner
         run: |
           nuget install $TEST_FRAMEWORK_RUNNER -Version $TEST_FRAMEWORK_RUNNER_VERSION -OutputDirectory $PACKAGES_PATH
@@ -31,6 +32,9 @@ jobs:
           godot --path ./$GAME_SUBDIRECTORY --build-solutions --quit
         timeout-minutes: 1
         continue-on-error: true
-      - name: Tests
+      - name: Tests XUnit
         run: |
           mono $PACKAGES_PATH/$TEST_FRAMEWORK_RUNNER.$TEST_FRAMEWORK_RUNNER_VERSION/tools/$TEST_FRAMEWORK_RUNNER_EXECUTABLE $TEST_SUBDIRECTORY/bin/Debug/$TEST_TARGET_FRAMEWORK/$TEST_DLL -verbose
+      - name: Tests WAT
+        run: |
+          godot --path ./$GAME_SUBDIRECTORY addons/WAT/cli.tscn -run_all

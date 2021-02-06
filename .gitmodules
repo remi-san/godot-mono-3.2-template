@@ -1,0 +1,3 @@
+[submodule ".submodules/WAT-Mono"]
+	path = .submodules/WAT-Mono
+	url = git@github.com:CodeDarigan/WAT-Mono.git

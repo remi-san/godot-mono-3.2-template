@@ -25,6 +25,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           lfs: true
+          submodules: false
       - name: Get version name
         id: get_version
         uses: battila7/get-version-action@v2
@@ -66,6 +67,10 @@ jobs:
         uses: actions/checkout@v2
         with:
           lfs: true
+          submodules: false
+      - name: Delete tests from build
+        run: |
+          rm -Rf "./$GAME_SUBDIRECTORY/tests" && rm -Rf "./$GAME_SUBDIRECTORY/addons/WAT"
       - name: Setup WINE and rcedit for windows build
         if: ${{ matrix.platform == 'windows' && env.CUSTOM_ICON == 'true' }}
         run: |
