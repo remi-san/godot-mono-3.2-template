@@ -15,3 +15,6 @@ packages/
 # VS
 .vs
 .vscode
+
+# Test specific
+tests-summary.json

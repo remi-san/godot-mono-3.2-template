@@ -41,10 +41,18 @@ sed -i "s/config\/name=\"${oldName}\"/config\/name=\"${newName}\"/" "$refPath/ga
 [ -f "$refPath/tests/Tests.csproj" ] && sed -i "s/${oldName}.csproj/${newName}.csproj/" "$refPath/tests/Tests.csproj"
 [ -f "$refPath/tests/Tests.csproj" ] && sed -i "s/<RootNamespace>${oldNamespace}/<RootNamespace>${newNamespace}/" "$refPath/tests/Tests.csproj"
 
-# update namespace on dummy test
-[ -f "$refPath/tests/DummyTest.cs" ] && sed -i "s/namespace ${oldNamespace}/namespace ${newNamespace}/" "$refPath/tests/DummyTest.cs"
+# update namespace on dummy tests
+[ -f "$refPath/tests/godot/DummyGodotTest.cs" ] && sed -i "s/namespace ${oldNamespace}/namespace ${newNamespace}/" "$refPath/tests/godot/DummyGodotTest.cs"
+[ -f "$refPath/tests/standard/DummyStandardTest.cs" ] && sed -i "s/namespace ${oldNamespace}/namespace ${newNamespace}/" "$refPath/tests/DummyStandardTest.cs"
+
+# Update namespace in the makefile
+[ -f "$refPath/Makefile" ] && sed -i "s/standard_tests_namespace = ${oldNamespace}/standard_tests_namespace = ${newNamespace}/" "$refPath/Makefile"
 
 # update the name on release workflow
+[ -f "$refPath/.github/workflows/release.yml" ] && sed -i "s/EXPORT_NAME: \"Game\"/EXPORT_NAME: \"${newName}\"/" "$refPath/.github/workflows/release.yml"
 [ -f "$refPath/.github/workflows/release.yml" ] && sed -i "s/EXPORT_NAME: \"${oldName}\"/EXPORT_NAME: \"${newName}\"/" "$refPath/.github/workflows/release.yml"
+
+# Update the namespace on the test workflow
+[ -f "$refPath/.github/workflows/run-tests.yml" ] && sed -i "s/STANDARD_TESTS_NAMESPACE: ${oldNamespace}/STANDARD_TESTS_NAMESPACE: ${newNamespace}/" "$refPath/.github/workflows/run-tests.yml"
 
 echo "Done."
