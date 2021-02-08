@@ -1,0 +1,4 @@
+[submodule ".submodules/GodotXUnit"]
+	path = .submodules/GodotXUnit
+	url = git@github.com:fledware/GodotXUnit.git
+	ignore = dirty

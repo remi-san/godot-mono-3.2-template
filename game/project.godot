@@ -13,11 +13,21 @@ _global_script_class_icons={
 
 }
 
+[GodotXUnit]
+
+results_summary="res://tests-summary.json"
+target_assembly="__custom__"
+target_assembly_custom="../tests/bin/Debug/net472/Tests.dll"
+
 [application]
 
 config/name="Template"
 run/main_scene="res://DefaultScene.tscn"
 config/icon="res://icon.png"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "GodotXUnit" )
 
 [rendering]
 
